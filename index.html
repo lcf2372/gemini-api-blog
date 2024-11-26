@@ -83,6 +83,32 @@
             padding: 10px;
             margin: 20px 0;
         }
+
+        .repository-link {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+
+        .repository-link a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .repository-link a:hover {
+            text-decoration: underline;
+        }
+
+        .cicd-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-top: 20px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        }
     </style>
 </head>
 <body>
@@ -177,9 +203,19 @@ jobs:
             <li>Expanding the pipeline to deploy the application to a cloud platform like Heroku or AWS.</li>
         </ul>
         <p>CI/CD pipelines are a crucial part of modern development workflows, and by automating these steps, we can ensure faster, more reliable software delivery.</p>
+
+        <!-- Repository Link -->
+        <div class="repository-link">
+            <p>Check out the source code for this project on GitHub: <a href="https://github.com/lcf2372/gemini-api" target="_blank">Gemini API Repository</a></p>
+        </div>
+
+        <!-- CI/CD Image -->
+        <img src="https://github.com/lcf2372/gemini-api-blog/blob/gh-pages/CI-CD.png?raw=true" alt="CI/CD Pipeline" class="cicd-image">
     </article>
 
-    <div class="footer">© 2024 Abinesh Pandi. All Rights Reserved.</div>
+    <footer class="footer">
+        <p>&copy; 2024 Abinesh Pandi. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
