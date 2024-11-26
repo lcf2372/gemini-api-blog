@@ -1,1 +1,196 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Abinesh Pandi">
+    <title>Exploring CI/CD and API Testing with the Gemini API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        article {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        h3 {
+            margin-top: 20px;
+            color: #555;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            font-family: Consolas, monospace;
+            border-radius: 5px;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 1.1rem;
+        }
+
+        pre code {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .code-example {
+            background-color: #eeeeee;
+            border-left: 5px solid #4CAF50;
+            padding: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Exploring CI/CD and API Testing with the Gemini API</h1>
+    </header>
+
+    <article>
+        <p><strong>By Abinesh Pandi</strong></p>
+
+        <section>
+            <h2>Introduction</h2>
+            <p>Building reliable, scalable applications is a key goal for developers, and one of the most effective ways to achieve this is by implementing a <strong>CI/CD (Continuous Integration/Continuous Deployment)</strong> pipeline. In this post, I’ll walk you through my journey of developing the <strong>Gemini API</strong>, testing it, and setting up an automated CI/CD pipeline using <strong>GitHub Actions</strong>.</p>
+        </section>
+
+        <section>
+            <h2>Setting Up the Gemini API</h2>
+            <p>The Gemini API I created serves as a simple interface for generating content based on user-provided prompts and instructions. The idea behind the API is simple: users send a request with a prompt, and the API responds with a mock result based on that prompt.</p>
+            <p>Here’s the core function of the API:</p>
+            <div class="code-example">
+                <pre><code>
+@app.route('/generate', methods=['POST'])
+def generate_content():
+    data = request.get_json()
+    prompt = data.get("prompt")
+    instructions = data.get("instructions")
+    response = f"This is a mock response based on the prompt: '{prompt}' with instructions: '{instructions}'."
+    return jsonify({"response": response})
+                </code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Testing the API Locally</h2>
+            <p>Before diving into CI/CD setup, it’s crucial to ensure that the API works as expected. I used <strong>curl</strong>, a command-line tool to test the API locally. Here’s how I tested it:</p>
+            <div class="code-example">
+                <pre><code>
+curl -X POST http://localhost:5000/generate \
+-H "Content-Type: application/json" \
+-d "{\"prompt\": \"Write a blog post introduction\", \"instructions\": \"Make it formal and concise.\"}"
+                </code></pre>
+            </div>
+            <p>The response was:</p>
+            <div class="code-example">
+                <pre><code>
+{
+  "response": "This is a mock response based on the prompt: 'Write a blog post introduction' with instructions: 'Make it formal and concise.'"
+}
+                </code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Setting Up CI/CD with GitHub Actions</h2>
+            <p>Once the API was functioning locally, I moved on to automate the testing and deployment process using GitHub Actions. Here's the pipeline setup:</p>
+            <div class="code-example">
+                <pre><code>
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t gemini-api .
+
+      - name: Run tests (mocked for now)
+        run: |
+          echo "Mock testing skipped for now"
+
+      - name: Deploy to production (optional)
+        run: |
+          echo "Deploying the app..."
+                </code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>Challenges and Solutions</h2>
+            <p>While setting up the CI/CD pipeline, I faced a few challenges like Docker networking issues and testing inside Docker. However, with a few adjustments, I was able to get everything up and running. Here are the solutions I implemented:</p>
+            <ul>
+                <li>Resolved Docker networking issues by configuring Docker to expose the correct ports.</li>
+                <li>Mocked tests for now, with plans to implement real tests later in the pipeline.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Conclusion</h2>
+            <p>This project has been a fantastic learning experience. By using the Gemini API, testing it locally, and setting up a CI/CD pipeline, I’ve automated key steps in the development process. Looking ahead, I plan to further refine the tests and deployment process.</p>
+        </section>
+
+        <div class="footer">
+            <p>&copy; 2024 Abinesh Pandi. All rights reserved.</p>
+        </div>
+    </article>
+</body>
+</html>
